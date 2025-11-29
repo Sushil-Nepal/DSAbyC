@@ -17,15 +17,9 @@ int push(int value){
     return 1;
 }
 int pop(){
-    if(isEmpty()){
-        printf("\nStack is Empty:\n");
-    }
     return stack[top--];
 }
 int peak(){
-    if(isEmpty()){
-        printf("\n Stack is Empty:\n");
-    }
     return stack[top];
 }
 
@@ -37,7 +31,7 @@ void display(){
     printf("]\n");
 }
 int main(){
-    int value,choice;
+    int value,choice,input_status;
     while(1){
         printf("\n=====Stack Menu=====");
         printf("\n 1.Push\n 2.pop\n 3.peak \n 4.display \n 5.exit\n");
@@ -46,11 +40,19 @@ int main(){
         if(choice==5){
             break;
         }
-        scanf("%d",&choice);
+        input_status=scanf("%d",&choice);
+        if(input_status==-1){
+            printf("\nWrong input type\n");
+            choice=0;
+        }
         switch(choice){
             case 1:
                 printf("\nEnter the value to be Pushed:");
                 scanf("%d",&value);
+                if(input_status==-1){
+                    printf("\nWrong input type\n");
+                    break;
+                }
                 if(!push(value)){
                     printf("\nFailed to Push\n");
                     break;
@@ -58,12 +60,20 @@ int main(){
                 printf("\nPush Sucessfully\n");
                 break;
             case 2:
-                value=pop();
-                printf("\nPop Value is:%d\n",value);
+                if(!isEmpty()){
+                    value=pop();
+                    printf("\nPop Value is:%d\n",value);
+                    break;
+                }
+                printf("Can Not Pop ! Stack Is Empty");
                 break;
             case 3:
-                value=peak();
-                printf("Peak Value is:%d \n",value);
+                if(!isEmpty()){
+                    value=peak();
+                    printf("\npeak Value is:%d\n",value);
+                    break;
+                }
+                printf("Can Not Peak ! Stack Is Empty");
                 break;
             case 4:
                 printf("Stack is:");
